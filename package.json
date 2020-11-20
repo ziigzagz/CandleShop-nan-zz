@@ -1,5 +1,5 @@
 {
-  "name": "myweb",
+  "name": "candle-shop",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,7 +7,15 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.14.0",
+    "axios": "^0.20.0",
+    "bootstrap": "^4.5.2",
     "core-js": "^3.6.5",
+    "dns": "^0.2.2",
+    "firebase": "^7.21.1",
+    "mssql": "^6.2.3",
+    "nodemailer": "^6.4.13",
+    "sweetalert": "^2.1.2",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"
