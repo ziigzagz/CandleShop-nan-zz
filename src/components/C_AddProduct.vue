@@ -72,13 +72,13 @@
                     >รูปภาพ</span
                   >
                 </div>
-                <input type="file" id="files" name="files[]" multiple />
+                <input type="file" id="files" name="files[]" multiple accept="image/*"/>
               </div>
             </div>
             <button class="btn btn-danger mr-3" @click="cancel">
               ยกเลิก
             </button>
-            <button class="btn btn-success" @click="test">เพิ่มสินค้า</button>
+            <button class="btn btn-success" @click="AddProduct">เพิ่มสินค้า</button>
             <div class="mainDiv" align="right"></div>
           </div>
         </div>
@@ -96,7 +96,7 @@ export default {
     };
   },
   methods: {
-    async test() {
+    async AddProduct() {
       var storageRef = firebase.storage().ref("img");
       // Get the file from DOM
 

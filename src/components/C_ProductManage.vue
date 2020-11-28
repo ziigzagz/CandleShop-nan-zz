@@ -21,7 +21,7 @@
               <i class="fas fa-trash"></i>
               ลบ
             </button>
-            <button class="btn btn-warning" @click="Edit(a.Serial)">
+            <button class="btn btn-warning" @click="Edit(a.ID,a.img)">
               <i class="fas fa-wrench"></i>
               แก้ไข
             </button>
@@ -71,8 +71,10 @@ export default {
         txt = "You pressed Cancel!";
       }
     },
-    Edit(Serial){
-      localStorage.setItem("ProductID", Serial);
+    Edit(ID,img){
+      localStorage.setItem("ProductID", ID);
+      localStorage.setItem("img", img);
+      this.$router.replace("/ProductEdit");
     }
   },
 };
