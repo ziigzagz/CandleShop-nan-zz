@@ -4,6 +4,7 @@
 
     <hr />
     <!-- content -->
+    <button class="btn btn-success" @click="addProduct">เพิ่มสินค้า</button>
     <Productmanage />
   </div>
 </template>
@@ -17,7 +18,6 @@ export default {
   mounted() {
     if (localStorage.getItem("uid") != "oe0Yj7t0NcgvxQl6jyu0FWMWPjf1") {
       this.$router.replace("/Logout");
-      console.log("7897879");
     }
     // console.log("7897879");
   },
@@ -35,6 +35,11 @@ export default {
     Nav,
     Cover,
     Productmanage,
+  },
+  methods: {
+    addProduct(){
+      this.$router.replace("/addproduct");
+    }
   },
 };
 </script>

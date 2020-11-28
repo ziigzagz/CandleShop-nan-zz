@@ -2,11 +2,7 @@
   <div class="col-6 mx-auto">
     <br /><br />
     <div class="card">
-      <form
-        class="text-center border border-light p-5"
-        action="#!"
-        @submit="login"
-      >
+      <form class="text-center border border-light p-5" @submit="login">
         <p class="h4 mb-4">Sign in</p>
 
         <!-- Email -->
@@ -71,8 +67,12 @@ export default {
         .then(
           (user) => {
             var user = firebase.auth().currentUser;
+            console.log(user);
             if (user != null) {
-              user.providerData.forEach(function(profile) {
+              this.$router.replace("/home");
+              user.providerData.forEach((profile) => {
+                console.log(user.uid);
+                localStorage.setItem("uid", user.uid);
                 localStorage.setItem("User", profile.email);
                 localStorage.setItem("StatusLogin", 1);
                 // console.log("Sign-in provider: " + profile.providerId);
@@ -80,6 +80,9 @@ export default {
                 // console.log("  Name: " + profile.displayName);
                 // console.log("  Email: " + profile.email);
                 // console.log("  Photo URL: " + profile.photoURL);
+                if (profile.uid == "zigzagzaczax@gmail.com") {
+                  localStorage.setItem("isAdmin", true);
+                }
               });
             }
             this.$router.replace("/");
@@ -125,5 +128,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

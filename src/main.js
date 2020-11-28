@@ -6,6 +6,7 @@ import firebase from 'firebase/app'
 
 Vue.config.productionTip = false
 Vue.config.silent = true;
+
 const config = {
     apiKey: "AIzaSyDhfmodZEz_HNsUH7P88f4EGh5rPvoxY90",
     authDomain: "my-project-2fb8a.firebaseapp.com",
@@ -16,6 +17,7 @@ const config = {
     appId: "1:52088696948:web:87e92c945a459446d8e121",
     measurementId: "G-VR5Y4G8C40"
 };
+
 firebase.initializeApp(config)
 
 new Vue({

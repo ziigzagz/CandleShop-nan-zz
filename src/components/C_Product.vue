@@ -49,6 +49,7 @@ export default {
   data() {
     return {
       datas: [],
+      abc:0,
     };
   },
   mounted() {

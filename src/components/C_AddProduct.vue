@@ -15,7 +15,6 @@
 
                 <input
                   name="serial"
-
                   type="text"
                   class="form-control"
                   aria-label="Sizing example input"
@@ -73,12 +72,7 @@
                     >รูปภาพ</span
                   >
                 </div>
-                <input
-                  type="file"
-                  id="files"
-                  name="files[]"
-                  multiple
-                />
+                <input type="file" id="files" name="files[]" multiple />
               </div>
             </div>
             <button class="btn btn-danger mr-3" @click="cancel">
@@ -94,7 +88,7 @@
 </template>
 <script>
 import firebase from "firebase";
-export default{
+export default {
   data() {
     return {
       serial: "",
@@ -105,51 +99,66 @@ export default{
     async test() {
       var storageRef = firebase.storage().ref("img");
       // Get the file from DOM
+
       var file = document.getElementById("files").files[0];
       console.log(file);
       //dynamically set reference to the file name
       var thisRef = storageRef.child(file.name);
       //put request upload file to firebase storage
-      thisRef.put(file).then((snapshot) => {
+      thisRef.put(file).then(() => {
         alert("เพิมสินค้าสำเร็จ");
         console.log("Uploaded a blob or file!");
+        const storage = firebase.storage();
+        // let linkimg = "";
+        // Get metadata properties
+        let linkimg;
+        let self = this;
+        storage
+          .ref("img")
+          .child(file.name)
+          .getDownloadURL()
+          .then((url) => {
+            // console.log(typeof url);
+            // console.log(url);
+            self.linkimg = url;
+
+            self.datas.push(url);
+            console.log(linkimg);
+            console.log(self.linkimg);
+            console.log(self.datas);
+            // console.log(datas);
+            var data = new FormData();
+            data.append(
+              "serial",
+              document.querySelector("input[name=serial]").value
+            );
+            data.append(
+              "name",
+              document.querySelector("input[name=name]").value
+            );
+            data.append(
+              "price",
+              document.querySelector("input[name=price]").value
+            );
+            data.append(
+              "info",
+              document.querySelector("textarea[name=info]").value
+            );
+            data.append("img", self.datas[0]);
+            data.append("del", 0);
+            console.log(data);
+            axios
+              .post("http://localhost:80/insert.php", data)
+              .then((response) => {
+                console.log(response.data);
+                this.$router.replace("/Manage");
+              });
+          });
       });
       //   const field = document.querySelector("input[name=test]").value;
       //   console.log(field);
       //   var storageRef = firebase.storage().ref("img");
       //   var forestRef = storageRef.child("Daco_4102983.png");
-      const storage = firebase.storage();
-      // let linkimg = "";
-      // Get metadata properties
-      let linkimg;
-      let self = this;
-      await storage
-        .ref("img")
-        .child(file.name)
-        .getDownloadURL()
-        .then((url) => {
-          // console.log(typeof url);
-          // console.log(url);
-          self.linkimg = url;
-
-          self.datas.push(url);
-        });
-
-      console.log(linkimg);
-      console.log(self.linkimg);
-      console.log(self.datas);
-      // console.log(datas);
-      var data = new FormData();
-      data.append("serial", document.querySelector("input[name=serial]").value);
-      data.append("name", document.querySelector("input[name=name]").value);
-      data.append("price", document.querySelector("input[name=price]").value);
-      data.append("info", document.querySelector("textarea[name=info]").value);
-      data.append("img", self.datas[0]);
-      data.append("del", 0);
-      console.log(data);
-      axios.post("http://localhost:80/insert.php", data).then((response) => {
-        console.log(response.data);
-      });
     },
     cancel() {
       this.$router.replace("/Manage");

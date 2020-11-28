@@ -66,7 +66,7 @@
             <button class="btn btn-danger mr-3" @click="cancel">
               ยกเลิก
             </button>
-            <button class="btn btn-success" @click="Register1">
+            <button class="btn btn-success" @click="Register">
               สมัครสมาชิก
             </button>
             <div class="mainDiv" align="right"></div>
@@ -88,19 +88,6 @@ export default {
   methods: {
     cancel() {
       this.$router.replace("/");
-    },
-    Register1() {
-      console.log("123");
-      // var database = firebase.database();
-      // var name = "zax";
-      // var email = "iffammmm";
-      // firebase
-      //   .database()
-      //   .ref("users")
-      //   .set({
-      //     name: name,
-      //     email: email,
-      //   });
     },
     Register() {
       var email = document.querySelector("input[name=email]").value;

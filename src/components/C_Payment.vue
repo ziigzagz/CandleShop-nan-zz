@@ -24,11 +24,8 @@
                 <tr v-for="a in datas">
                   <td>
                     {{ a.OrderID }}
-                    <br>
-                    <button
-                      class="btn btn-info"
-                      @click="InfoOrder(a.OrderID)"
-                    >
+                    <br />
+                    <button class="btn btn-info" @click="InfoOrder(a.OrderID)">
                       คลิ๊กดูรายละเอียด
                     </button>
                   </td>
@@ -48,7 +45,13 @@
                     </div>
                     <div class="row">
                       <div class="col">
-                        <input type="file" id="files" name="files[]" multiple class="mx-auto"/>
+                        <input
+                          type="file"
+                          id="files"
+                          name="files[]"
+                          multiple
+                          class="mx-auto"
+                        />
                         <button
                           class="btn btn-info"
                           @click="uploadslip(a.OrderID)"
@@ -108,30 +111,31 @@ export default {
       thisRef.put(file).then((snapshot) => {
         alert("File Uploaded");
         console.log("Uploaded a blob or file!");
+        const storage = firebase.storage();
+        // Get metadata properties
+        let linkimg;
+        let self = this;
+        storage
+          .ref("img")
+          .child(file.name)
+          .getDownloadURL()
+          .then((url) => {
+            console.log(typeof url); //string
+            console.log(url); // link
+            self.linkimg = url;
+            self.upload.push(url);
+            var data = new FormData();
+            data.append("imgpay", self.upload[0]);
+            data.append("OrderID", OrderID);
+            // console.log(self.upload[0]); // link
+            // console.log(OrderID); // orderid
+            axios
+              .post("http://localhost:80/updatepayimg.php", data)
+              .then((response) => {
+                this.$router.replace("/Order");
+              });
+          });
       });
-      const storage = firebase.storage();
-      // Get metadata properties
-      let linkimg;
-      let self = this;
-      storage
-        .ref("img")
-        .child(file.name)
-        .getDownloadURL()
-        .then((url) => {
-          console.log(typeof url); //string
-          console.log(url); // link
-          self.linkimg = url;
-          self.upload.push(url);
-          var data = new FormData();
-          data.append("imgpay", self.upload[0]);
-          data.append("OrderID", OrderID);
-          // console.log(self.upload[0]); // link
-          // console.log(OrderID); // orderid
-          axios
-            .post("http://localhost:80/updatepayimg.php", data)
-            .then((response) => {});
-        });
-      this.$router.replace("/Order");
     },
     InfoOrder(OrderID) {
       localStorage.setItem("OrderID", OrderID);
