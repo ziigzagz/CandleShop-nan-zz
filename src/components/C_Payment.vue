@@ -109,7 +109,7 @@ export default {
       var thisRef = storageRef.child(file.name);
       //put request upload file to firebase storage
       thisRef.put(file).then((snapshot) => {
-        alert("File Uploaded");
+        alert("อัพโหลดสลิปสำเร็จ");
         console.log("Uploaded a blob or file!");
         const storage = firebase.storage();
         // Get metadata properties
@@ -132,7 +132,8 @@ export default {
             axios
               .post("http://localhost:80/updatepayimg.php", data)
               .then((response) => {
-                this.$router.replace("/Order");
+                window.location.href = "/Payment";
+                // this.$router.replace("/Payment");
               });
           });
       });
@@ -149,4 +150,5 @@ export default {
 .bg-a {
   background-color: tan;
 }
+
 </style>

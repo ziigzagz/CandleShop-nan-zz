@@ -111,6 +111,9 @@ export default {
     };
   },
   methods: {
+    cancel(){
+ this.$router.replace("/Manage");
+    },
     check(val) {
       console.log(this.CheckUpdateImg);
       this.CheckUpdateImg = true;
