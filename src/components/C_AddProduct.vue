@@ -16,6 +16,7 @@
                 <input
                   name="serial"
                   type="text"
+                  id="serial"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-default"
@@ -32,6 +33,7 @@
                 <input
                   name="name"
                   type="text"
+                  id="name"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-default"
@@ -48,6 +50,7 @@
                 <input
                   name="price"
                   type="number"
+                  id="price"
                   min="10"
                   class="form-control"
                   aria-label="Sizing example input"
@@ -62,7 +65,7 @@
                     >รายละเอียด</span
                   >
                 </div>
-                <textarea name="info" id="" cols="100%" rows="10"></textarea>
+                <textarea name="info" id="info" cols="100%" rows="10"></textarea>
               </div>
             </div>
             <div class="col">
@@ -72,13 +75,21 @@
                     >รูปภาพ</span
                   >
                 </div>
-                <input type="file" id="files" name="files[]" multiple accept="image/*"/>
+                <input
+                  type="file"
+                  id="files"
+                  name="files[]"
+                  multiple
+                  accept="image/*"
+                />
               </div>
             </div>
             <button class="btn btn-danger mr-3" @click="cancel">
               ยกเลิก
             </button>
-            <button class="btn btn-success" @click="AddProduct">เพิ่มสินค้า</button>
+            <button class="btn btn-success" @click="AddProduct">
+              เพิ่มสินค้า
+            </button>
             <div class="mainDiv" align="right"></div>
           </div>
         </div>
@@ -97,68 +108,75 @@ export default {
   },
   methods: {
     async AddProduct() {
-      var storageRef = firebase.storage().ref("img");
-      // Get the file from DOM
+      if (
+        document.getElementById("serial").value != "" &&
+        document.getElementById("name").value != "" &&
+        document.getElementById("price").value != ""
 
-      var file = document.getElementById("files").files[0];
-      console.log(file);
-      //dynamically set reference to the file name
-      var thisRef = storageRef.child(file.name);
-      //put request upload file to firebase storage
-      thisRef.put(file).then(() => {
-        alert("เพิมสินค้าสำเร็จ");
-        console.log("Uploaded a blob or file!");
-        const storage = firebase.storage();
-        // let linkimg = "";
-        // Get metadata properties
-        let linkimg;
-        let self = this;
-        storage
-          .ref("img")
-          .child(file.name)
-          .getDownloadURL()
-          .then((url) => {
-            // console.log(typeof url);
-            // console.log(url);
-            self.linkimg = url;
+      ) {
+        var storageRef = firebase.storage().ref("img");
+        // Get the file from DOM
 
-            self.datas.push(url);
-            console.log(linkimg);
-            console.log(self.linkimg);
-            console.log(self.datas);
-            // console.log(datas);
-            var data = new FormData();
-            data.append(
-              "serial",
-              document.querySelector("input[name=serial]").value
-            );
-            data.append(
-              "name",
-              document.querySelector("input[name=name]").value
-            );
-            data.append(
-              "price",
-              document.querySelector("input[name=price]").value
-            );
-            data.append(
-              "info",
-              document.querySelector("textarea[name=info]").value
-            );
-            data.append("img", self.datas[0]);
-            data.append("del", 0);
-            console.log(data);
-            axios
-              .post("http://localhost:80/insert.php", data)
-              .then((response) => {
-                console.log(response.data);
-                this.$router.replace("/Manage");
-              });
-          });
-      });
-      //   const field = document.querySelector("input[name=test]").value;
-      //   console.log(field);
-      //   var storageRef = firebase.storage().ref("img");
-      //   var forestRef = storageRef.child("Daco_4102983.png");
+        var file = document.getElementById("files").files[0];
+        console.log(file);
+        //dynamically set reference to the file name
+
+        var thisRef = storageRef.child(file.name);
+        //put request upload file to firebase storage
+        thisRef.put(file).then(() => {
+          alert("เพิมสินค้าสำเร็จ");
+          console.log("Uploaded a blob or file!");
+          const storage = firebase.storage();
+          // let linkimg = "";
+          // Get metadata properties
+          let linkimg;
+          let self = this;
+          storage
+            .ref("img")
+            .child(file.name)
+            .getDownloadURL()
+            .then((url) => {
+              // console.log(typeof url);
+              // console.log(url);
+              self.linkimg = url;
+
+              self.datas.push(url);
+              console.log(linkimg);
+              console.log(self.linkimg);
+              console.log(self.datas);
+              // console.log(datas);
+              var data = new FormData();
+              data.append(
+                "serial",
+                document.querySelector("input[name=serial]").value
+              );
+              data.append(
+                "name",
+                document.querySelector("input[name=name]").value
+              );
+              data.append(
+                "price",
+                document.querySelector("input[name=price]").value
+              );
+              data.append(
+                "info",
+                document.querySelector("textarea[name=info]").value
+              );
+              data.append("img", self.datas[0]);
+              data.append("del", 0);
+              console.log(data);
+              axios
+                .post("http://localhost:80/insert.php", data)
+                .then((response) => {
+                  console.log(response.data);
+                  this.$router.replace("/Manage");
+                });
+            });
+        });
+      }
+      else{
+        alert("กรุณากรอกข้อมูลให้ครบ");
+      }
     },
     cancel() {
       this.$router.replace("/Manage");

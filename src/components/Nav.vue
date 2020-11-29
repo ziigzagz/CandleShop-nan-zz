@@ -5,7 +5,7 @@
       <nav class=" navbar navbar-expand-lg  ml-3 mr-3  ">
         <div class="col-1 text-left ">
           <img
-            src="../views/img/google_login.jpg"
+            src="../views/img/logo.png"
             alt="Smiley face"
             width="70"
             height="70"
@@ -162,15 +162,11 @@ export default {
 <style scoped>
 
 nav {
-  background: rgb(21, 58, 108);
-  background: linear-gradient(
-    90deg,
-    rgba(21, 58, 108, 1) 14%,
-    rgba(17, 125, 166, 1) 100%
-  );
+  background-color: #845e4b;
+
 }
 a {
-  color: white;
+  color: #2e2a2b;
   transition: font-size 0.1s;
 }
 a:hover {

@@ -127,7 +127,7 @@ export default {
         var thisRef = storageRef.child(file.name);
         //put request upload file to firebase storage
         thisRef.put(file).then(() => {
-          alert("เพิมสินค้าสำเร็จ");
+          alert("อัพเดตสินค้าสำเร็จ");
           console.log("Uploaded a blob or file!");
           const storage = firebase.storage();
           // let linkimg = "";

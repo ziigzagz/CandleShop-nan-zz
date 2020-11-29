@@ -35,6 +35,7 @@
                 <input
                   name="Name"
                   type="text"
+                  id="Name"
                   class="form-control col-6 mx-auto mb-2"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-default"
@@ -42,14 +43,21 @@
                 />
                 <input
                   name="Tel"
+                  id="Tel"
                   type="text"
                   class="form-control col-6 mx-auto mb-2"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-default"
                   placeholder="เบอร์โทร"
                 />
-                <textarea name="info" id="" cols="100%" rows="10" placeholder="ที่อยู่"></textarea>
-<br>
+                <textarea
+                  name="info"
+                  id="info"
+                  cols="100%"
+                  rows="10"
+                  placeholder="ที่อยู่"
+                ></textarea>
+                <br />
                 <button class="btn btn-info" @click="insertOrder">
                   <h4>ยืนยัน</h4>
                 </button>
@@ -85,40 +93,54 @@ export default {
     insertOrder() {
       var r = confirm("ยืนยันการสั่งซื้อ  ");
       if (r == true) {
-        var year = new Date().getFullYear();
-        var month = new Date().getMonth() + 1;
-        var day = new Date().getDate();
-        var hr = new Date().getHours();
-        var mins = new Date().getMinutes();
-        var sec = new Date().getSeconds();
-        var ms = new Date().getMilliseconds();
-        var order = "ORDER-" + year + month + day + hr + mins + sec + ms;
-        let self = this;
-        const axios = require("axios");
-        let tmp;
-        this.$store.getters.getCartProduct.forEach((element) => {
-          tmp = (element[0]);
-          var data = new FormData();
-          data.append("OrderID", order);
-          data.append("Serial", tmp);
-          data.append("Name", document.querySelector("input[name=Name]").value);
-          data.append("Tel", document.querySelector("input[name=Tel]").value);
-          data.append("Address", document.querySelector("textarea[name=info]").value);
-          data.append("User", localStorage.getItem("User"));
-          console.log(order);
-          console.log(tmp);
-          console.log(document.querySelector("input[name=Name]").value);
-          console.log(document.querySelector("input[name=Tel]").value);
-          console.log(document.querySelector("textarea[name=info]").value);
-          console.log(localStorage.getItem("User"));
+        if (
+          document.getElementById("Name").value != "" &&
+          document.getElementById("Tel").value != "" &&
+          document.getElementById("info").value != ""
+        ) {
+          var year = new Date().getFullYear();
+          var month = new Date().getMonth() + 1;
+          var day = new Date().getDate();
+          var hr = new Date().getHours();
+          var mins = new Date().getMinutes();
+          var sec = new Date().getSeconds();
+          var ms = new Date().getMilliseconds();
+          var order = "ORDER-" + year + month + day + hr + mins + sec + ms;
+          let self = this;
+          const axios = require("axios");
+          let tmp;
+          this.$store.getters.getCartProduct.forEach((element) => {
+            tmp = element[0];
+            var data = new FormData();
+            data.append("OrderID", order);
+            data.append("Serial", tmp);
+            data.append(
+              "Name",
+              document.querySelector("input[name=Name]").value
+            );
+            data.append("Tel", document.querySelector("input[name=Tel]").value);
+            data.append(
+              "Address",
+              document.querySelector("textarea[name=info]").value
+            );
+            data.append("User", localStorage.getItem("User"));
+            console.log(order);
+            console.log(tmp);
+            console.log(document.querySelector("input[name=Name]").value);
+            console.log(document.querySelector("input[name=Tel]").value);
+            console.log(document.querySelector("textarea[name=info]").value);
+            console.log(localStorage.getItem("User"));
 
-          axios
-            .post("http://localhost:80/insertorder.php", data)
-            .then((response) => {
-              console.log(response);
-            });
-        });
-        this.$router.replace("/Order");
+            axios
+              .post("http://localhost:80/insertorder.php", data)
+              .then((response) => {
+                console.log(response);
+              });
+          });
+          this.$router.replace("/Order");
+        } else {
+          alert("กรุณากรอกข้อมูลให้ครบ");
+        }
       } else {
         //cancel
       }

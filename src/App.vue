@@ -31,7 +31,9 @@ export default {
 /* #app {
 
 } */
-
+body{
+  background-color: #fbf3ec;
+}
 #nav {
   padding: 30px;
 }

@@ -19,7 +19,7 @@
 
             <table class="table table-bordered table-striped">
               <thead>
-                <tr>
+                <tr class="bg-a">
                   <th>เลขที่สั่งซื้อ</th>
                   <!-- <th v-if="!isAdmin">ราคารวม</th> -->
 
@@ -223,4 +223,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.bg-a{
+  background-color: tan;
+}
+</style>

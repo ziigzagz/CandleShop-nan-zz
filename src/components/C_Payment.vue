@@ -11,8 +11,8 @@
           <!-- /.card-header -->
           <div class="card-body table-responsive">
             <table id="example1" class="table table-bordered table-striped">
-              <thead>
-                <tr>
+              <thead >
+                <tr class="bg-a">
                   <th>เลขที่สั่งซื้อ</th>
                   <th>จำนวนเงิน(บาท)</th>
 
@@ -145,4 +145,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.bg-a {
+  background-color: tan;
+}
+</style>
